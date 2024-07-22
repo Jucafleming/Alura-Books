@@ -10,6 +10,7 @@ function getLivros(req, res) {
         res.send(error.message);
     }
 }
+
 function getLivro(req, res) {
     try {
         const id = req.params.id
@@ -30,9 +31,15 @@ function getLivro(req, res) {
 function postLivro(req,res){
     try {
         const livro = req.body;
-        insereLivro(livro);
-        res.status(201);
-        res.send("criado");
+        if(req.body.nome){
+            insereLivro(livro);
+            res.status(201);
+            res.send("criado");
+        }else{
+            res.status(422);
+            res.send("O nome e obrigatorio");
+        }
+       
     } catch (error) {
         res.status(500);
         res.send(error.message);
